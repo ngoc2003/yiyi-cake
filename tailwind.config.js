@@ -2,9 +2,6 @@ module.exports = {
   purge: ["./src/**/*.{js,ts,jsx,tsx}"],
   darkMode: false,
   theme: {
-    fontFamily: {
-      poppins: ["Poppins", "sans-serif"],
-    },
     colors: {
       primary: { main: "#FFD43E", light: "#FFDF70", lighter: "#FFDF70" },
       secondary: { main: "#F55555", light: "#FFC8C3" },
