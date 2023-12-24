@@ -10,10 +10,14 @@ import {
 } from "react-native";
 import tw from "../../lib/tailwind";
 import { isPhoneNumber } from "../utils/regex";
+import { ParamListBase, useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 const { width } = Dimensions.get("window");
 
-const LoginScreen = () => {
+const SignupScreen = () => {
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+
   const [isFocus, setIFocus] = useState<boolean>(false);
   const [phoneNumber, setPhoneNumber] = useState<string>("");
 
@@ -42,7 +46,7 @@ const LoginScreen = () => {
           shadowColor: "#FCBC084D",
           shadowOpacity: 0.3,
           shadowOffset: { width: 0, height: -12 },
-          ...tw`bg-background rounded-t-[6] pt-22`,
+          ...tw`bg-background rounded-t-[6] pt-12`,
         }}
       >
         <Image
@@ -59,18 +63,18 @@ const LoginScreen = () => {
             <Text style={tw`text-2xl font-semibold text-text-main`}>
               Welcome,
             </Text>
-            <Text style={tw`mt-4 text-text-light`}>
+            <Text style={tw`mt-3.5 text-text-light`}>
               Type your
               <Text style={tw`text-text-main`}> phone number </Text>
               to continue
             </Text>
-            <View style={tw`w-full`}>
+            <View style={tw`w-full mt-6`}>
               <TextInput
                 onFocus={() => setIFocus(true)}
                 onBlur={() => setIFocus(false)}
                 onChangeText={(text) => setPhoneNumber(text)}
                 placeholder="Your phone number . . ."
-                style={tw`mt-6 p-4 rounded-xl border w-full ${
+                style={tw`p-4 rounded-xl border w-full ${
                   isError
                     ? "border-secondary-main"
                     : isFocus
@@ -86,6 +90,7 @@ const LoginScreen = () => {
               )}
             </View>
             <TouchableOpacity
+              onPress={() => navigation.navigate("Otp")}
               style={tw`p-3  rounded-xl mt-8 w-full ${
                 !isError && phoneNumber ? "bg-primary-main" : "bg-smoke-light"
               }`}
@@ -96,7 +101,7 @@ const LoginScreen = () => {
                 Sign up
               </Text>
             </TouchableOpacity>
-            <View style={tw`mt-18`}>
+            <View style={tw`mt-30`}>
               <Text style={tw`text-text-light`}>Or sign up with</Text>
               <View style={tw`flex-row mt-4 justify-center gap-4`}>
                 <Image
@@ -126,4 +131,4 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default SignupScreen;

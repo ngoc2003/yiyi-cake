@@ -25,7 +25,7 @@ const OnboardingStep3 = () => {
       <Text style={tw`text-text-main text-2xl px-4 text-center my-2`}>
         Receive your order safely
       </Text>
-      <Toolbar activeIndex={1} onPress={() => navigation.navigate("Login")} />
+      <Toolbar activeIndex={1} onPress={() => navigation.navigate("Signup")} />
     </OnboardingLayout>
   );
 };

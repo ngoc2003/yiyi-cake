@@ -9,7 +9,8 @@ import OnboardingStep1 from "../screens/onboarding/Step1";
 import OnboardingStep2 from "../screens/onboarding/Step2";
 import OnboardingStep3 from "../screens/onboarding/Step3";
 import { StatusBar } from "expo-status-bar";
-import LoginScreen from "../screens/LoginScreen";
+import SignupScreen from "../screens/Signup";
+import OtpScreen from "../screens/OtpScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -38,7 +39,12 @@ const MainNavigation = () => {
         />
 
         <Stack.Screen options={options} name="Home" component={HomeScreen} />
-        <Stack.Screen options={options} name="Login" component={LoginScreen} />
+        <Stack.Screen
+          options={options}
+          name="Signup"
+          component={SignupScreen}
+        />
+        <Stack.Screen options={options} name="Otp" component={OtpScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
