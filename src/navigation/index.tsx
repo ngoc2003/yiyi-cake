@@ -37,8 +37,8 @@ const MainNavigation = () => {
           component={OnboardingStep3}
         />
 
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen options={options} name="Home" component={HomeScreen} />
+        <Stack.Screen options={options} name="Login" component={LoginScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

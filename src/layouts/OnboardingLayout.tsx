@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { View } from "react-native";
+import { SafeAreaView, View } from "react-native";
 import tw from "../../lib/tailwind";
 
 interface OnboardingLayoutProp {
@@ -8,9 +8,9 @@ interface OnboardingLayoutProp {
 
 const OnboardingLayout = ({ children }: OnboardingLayoutProp) => {
   return (
-    <View style={tw`flex-1 bg-background items-center justify-center`}>
+    <SafeAreaView style={tw`flex-1 bg-background items-center justify-center`}>
       {children}
-    </View>
+    </SafeAreaView>
   );
 };
 

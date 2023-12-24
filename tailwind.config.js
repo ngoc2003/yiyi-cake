@@ -3,7 +3,7 @@ module.exports = {
   darkMode: false,
   theme: {
     colors: {
-      primary: { main: "#FFD43E", light: "#FFDF70", lighter: "#FFDF70" },
+      primary: { main: "#FFD43E", light: "#FFDF70", lighter: "#FFF7D9" },
       secondary: { main: "#F55555", light: "#FFC8C3" },
       text: {
         main: "#3C3939",
@@ -14,6 +14,8 @@ module.exports = {
         light: "#EEEEEE",
       },
       background: "#F8F7F1",
+      black: "#000",
+      white: "#fff",
     },
   },
   variants: {
