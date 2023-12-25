@@ -10,6 +10,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { isValidPassword } from "../utils/regex";
+import { useToast } from "react-native-toast-notifications";
 
 const schema = yup.object().shape({
   fullname: yup.string().required("This field is required"),
@@ -27,6 +28,7 @@ const schema = yup.object().shape({
 
 const CreateAccount = () => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+  const toast = useToast();
 
   const {
     handleSubmit,
@@ -46,6 +48,9 @@ const CreateAccount = () => {
     !!watch("fullname") && !!watch("address") && !!watch("password");
 
   const onSubmit = (data: FieldValues) => {
+    toast.show("Create account successfully!", {
+      type: "custom",
+    });
     console.log(data);
   };
 

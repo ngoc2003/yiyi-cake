@@ -12,6 +12,7 @@ import { StatusBar } from "expo-status-bar";
 import SignupScreen from "../screens/Signup";
 import OtpScreen from "../screens/OtpScreen";
 import CreateAccount from "../screens/CreateAccount";
+import SigninScreen from "../screens/LoginScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,8 +22,8 @@ const MainNavigation = () => {
   };
   return (
     <NavigationContainer>
-      <StatusBar translucent={false} />
-      <Stack.Navigator initialRouteName="Onboarding1">
+      <StatusBar translucent={false} style="dark" />
+      <Stack.Navigator initialRouteName="Signin">
         <Stack.Screen
           options={options}
           name="Onboarding1"
@@ -50,6 +51,11 @@ const MainNavigation = () => {
           options={options}
           name="CreateAccount"
           component={CreateAccount}
+        />
+        <Stack.Screen
+          options={options}
+          name="Signin"
+          component={SigninScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
