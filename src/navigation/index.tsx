@@ -11,6 +11,7 @@ import OnboardingStep3 from "../screens/onboarding/Step3";
 import { StatusBar } from "expo-status-bar";
 import SignupScreen from "../screens/Signup";
 import OtpScreen from "../screens/OtpScreen";
+import CreateAccount from "../screens/CreateAccount";
 
 const Stack = createNativeStackNavigator();
 
@@ -45,6 +46,11 @@ const MainNavigation = () => {
           component={SignupScreen}
         />
         <Stack.Screen options={options} name="Otp" component={OtpScreen} />
+        <Stack.Screen
+          options={options}
+          name="CreateAccount"
+          component={CreateAccount}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

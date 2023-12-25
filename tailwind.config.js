@@ -12,6 +12,7 @@ export const colors = {
   background: "#F8F7F1",
   black: "#000",
   white: "#fff",
+  border: "#C6C4C4",
 };
 
 module.exports = {
