@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Text, TextInput, TextInputProps, View, ViewProps } from "react-native";
+import { TextInput, TextInputProps, View, ViewProps } from "react-native";
 import tw from "../../../../lib/tailwind";
+import CustomText from "../text";
 
 interface TextFieldProps {
   isError?: boolean;
@@ -28,7 +29,7 @@ const TextField = ({
         onBlur={() => setIFocus(false)}
         onChangeText={onChangeText}
         placeholder={placeholder}
-        style={tw`p-4 rounded-2xl border w-full ${
+        style={tw`p-4 rounded-xl border w-full ${
           isError
             ? "border-secondary-main"
             : isFocus
@@ -38,7 +39,11 @@ const TextField = ({
         {...inputProp}
       />
 
-      {isError && <Text style={tw`pt-2 text-secondary-main`}>{errorText}</Text>}
+      {isError && (
+        <CustomText style={tw`pt-2 text-secondary-main`}>
+          {errorText}
+        </CustomText>
+      )}
     </View>
   );
 };

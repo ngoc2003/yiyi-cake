@@ -1,16 +1,17 @@
 import React from "react";
-import { Text, View } from "react-native";
-import HeaderNavigation from "../components/common/header-navigation";
+import { View } from "react-native";
+import HeaderNavigation from "../../components/common/header-navigation";
 import { ParamListBase, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import tw from "../../lib/tailwind";
-import TextField from "../components/common/text-field";
-import Button from "../components/common/button";
+import tw from "../../../lib/tailwind";
+import TextField from "../../components/common/text-field";
+import Button from "../../components/common/button";
 import { FieldValues, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { isValidPassword } from "../utils/regex";
+import { isValidPassword } from "../../utils/regex";
 import { useToast } from "react-native-toast-notifications";
+import CustomText from "../../components/common/text";
 
 const schema = yup.object().shape({
   fullname: yup.string().required("This field is required"),
@@ -59,12 +60,12 @@ const CreateAccount = () => {
       <HeaderNavigation onPress={() => navigation.navigate("Signup")} />
 
       <View style={tw`items-center pt-15`}>
-        <Text style={tw`text-3xl text-text-main font-semibold`}>
+        <CustomText style={tw`text-3xl text-text-main font-semibold`}>
           Getting Started
-        </Text>
-        <Text style={tw`text-text-light mt-4.5 text-center`}>
+        </CustomText>
+        <CustomText style={tw`text-text-light mt-4.5 text-center`}>
           Create an account to continue
-        </Text>
+        </CustomText>
         <View style={tw`mt-4 w-full`}>
           <TextField
             placeholder="Your fullname"
@@ -85,11 +86,9 @@ const CreateAccount = () => {
             isError={!!errors.address?.message}
           />
         </View>
-        <Button
-          isActive={canSubmit}
-          onPress={handleSubmit(onSubmit)}
-          text="Sign up"
-        />
+        <Button isActive={canSubmit} onPress={handleSubmit(onSubmit)}>
+          Sign up
+        </Button>
       </View>
     </View>
   );

@@ -1,10 +1,11 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import OTPTextView from "react-native-otp-textinput";
-import tw from "../../lib/tailwind";
+import tw from "../../../lib/tailwind";
 import { ParamListBase, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import HeaderNavigation from "../components/common/header-navigation";
+import HeaderNavigation from "../../components/common/header-navigation";
+import CustomText from "../../components/common/text";
 
 const OTP_LENGTH = 4;
 
@@ -18,12 +19,12 @@ const OtpScreen = () => {
     <View style={tw`flex-1 px-7 bg-background`}>
       <HeaderNavigation onPress={() => navigation.navigate("Signup")} />
       <View style={tw`items-center pt-15`}>
-        <Text style={tw`text-3xl text-text-main font-semibold`}>
+        <CustomText style={tw`text-3xl text-text-main font-semibold`}>
           Confirm Otp
-        </Text>
-        <Text style={tw`text-text-light mt-4.5 text-center`}>
+        </CustomText>
+        <CustomText style={tw`text-text-light mt-4.5 text-center`}>
           We sent OTP code to phone number{"\n"} +843 621 169
-        </Text>
+        </CustomText>
         <View style={{ width: 272, paddingTop: 53 }}>
           <OTPTextView
             handleTextChange={(e) => {

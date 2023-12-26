@@ -1,10 +1,11 @@
 import React from "react";
-import { Dimensions, Image, Text } from "react-native";
+import { Dimensions, Image } from "react-native";
 import OnboardingLayout from "../../layouts/OnboardingLayout";
 import tw from "../../../lib/tailwind";
 import Toolbar from "../../components/onboarding-screen/toolbar";
 import { ParamListBase, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import CustomText from "../../components/common/text";
 
 const { width } = Dimensions.get("window");
 
@@ -23,9 +24,9 @@ const OnboardingStep2 = () => {
         resizeMode="contain"
         source={require("../../../assets/images/cakeOnboarding2.png")}
       />
-      <Text style={tw`text-text-main text-2xl px-4 text-center my-2`}>
+      <CustomText style={tw`text-text-main text-2xl px-4 text-center my-2`}>
         Choose your favorite food
-      </Text>
+      </CustomText>
       <Toolbar onPress={() => navigation.navigate("Onboarding3")} />
     </OnboardingLayout>
   );
