@@ -56,7 +56,10 @@ const SigninScreen = () => {
     toast.show("Create account successfully!", {
       type: "custom",
     });
-    console.log(data);
+
+    setTimeout(() => {
+      navigation.navigate("Main");
+    }, 1500);
   };
 
   return (

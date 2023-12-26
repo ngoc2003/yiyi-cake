@@ -20,15 +20,32 @@ const ProductCard = ({ data }: ProductCardProp) => {
         shadowOffset: { width: 0, height: 4 },
       }}
     >
-      <Image
-        style={{
-          ...tw`w-full rounded-xl`,
-          height: undefined,
-          aspectRatio: 6 / 5,
-        }}
-        resizeMode="cover"
-        source={require("../../../../assets/images/example.png")}
-      />
+      <View>
+        <Image
+          style={{
+            ...tw`w-full rounded-xl`,
+            height: undefined,
+            aspectRatio: 6 / 5,
+          }}
+          resizeMode="cover"
+          source={require("../../../../assets/images/example.png")}
+        />
+        <View
+          style={tw`bg-secondary-main absolute top-0 right-0 px-1.5 py-0.5 rounded-bl-xl rounded-tr-xl`}
+        >
+          <CustomText style={{ fontSize: 12, ...tw`text-white` }}>
+            -{(((220000 - 190000) / 220000) * 100).toFixed()}%
+          </CustomText>
+        </View>
+
+        <View
+          style={tw`border border-secondary-main bg-primary-lighter px-1.5 py-0.5 rounded-tr-xl rounded-br-xl absolute -left-0.2 top-5`}
+        >
+          <CustomText style={{ fontSize: 12, ...tw`text-secondary-main` }}>
+            New
+          </CustomText>
+        </View>
+      </View>
       <View style={tw`-mt-0.5 p-2.5`}>
         <View style={tw`flex-row `}>
           <StarIcon color={colors.primary.main} size={16} />

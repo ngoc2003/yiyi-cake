@@ -13,17 +13,36 @@ import SignupScreen from "../screens/sign-up";
 import OtpScreen from "../screens/sign-up/OtpScreen";
 import CreateAccount from "../screens/sign-up/CreateAccount";
 import SigninScreen from "../screens/SigninScreen";
+import {
+  BottomTabNavigationOptions,
+  createBottomTabNavigator,
+} from "@react-navigation/bottom-tabs";
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+const BottomTabNavigator = () => {
+  const options: BottomTabNavigationOptions = {
+    headerShown: false,
+  };
+  return (
+    <Tab.Navigator initialRouteName="Home">
+      <Tab.Screen options={options} name="Home" component={HomeScreen} />
+      <Tab.Screen options={options} name="Order" component={HomeScreen} />
+      <Tab.Screen options={options} name="Account" component={HomeScreen} />
+    </Tab.Navigator>
+  );
+};
 
 const MainNavigation = () => {
   const options: NativeStackNavigationOptions = {
     headerShown: false,
   };
+
   return (
     <NavigationContainer>
       <StatusBar translucent={false} style="dark" />
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="Main">
         <Stack.Screen
           options={options}
           name="Onboarding1"
@@ -56,7 +75,12 @@ const MainNavigation = () => {
           name="Signin"
           component={SigninScreen}
         />
-        <Stack.Screen options={options} name="Home" component={HomeScreen} />
+
+        <Stack.Screen
+          options={options}
+          name="Main"
+          component={BottomTabNavigator}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
