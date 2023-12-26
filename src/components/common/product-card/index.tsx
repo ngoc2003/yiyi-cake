@@ -20,6 +20,7 @@ const ProductCard = ({ data }: ProductCardProp) => {
         shadowOffset: { width: 0, height: 4 },
       }}
     >
+<<<<<<< HEAD
       <View>
         <Image
           style={{
@@ -46,6 +47,17 @@ const ProductCard = ({ data }: ProductCardProp) => {
           </CustomText>
         </View>
       </View>
+=======
+      <Image
+        style={{
+          ...tw`w-full rounded-xl`,
+          height: undefined,
+          aspectRatio: 6 / 5,
+        }}
+        resizeMode="cover"
+        source={require("../../../../assets/images/example.png")}
+      />
+>>>>>>> 2caac44 (feat: home screen UI)
       <View style={tw`-mt-0.5 p-2.5`}>
         <View style={tw`flex-row `}>
           <StarIcon color={colors.primary.main} size={16} />
