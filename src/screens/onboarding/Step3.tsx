@@ -1,10 +1,11 @@
 import React from "react";
-import { Dimensions, Image, Text } from "react-native";
+import { Dimensions, Image } from "react-native";
 import OnboardingLayout from "../../layouts/OnboardingLayout";
 import tw from "../../../lib/tailwind";
 import Toolbar from "../../components/onboarding-screen/toolbar";
 import { ParamListBase, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import CustomText from "../../components/common/text";
 
 const { width } = Dimensions.get("screen");
 
@@ -22,9 +23,9 @@ const OnboardingStep3 = () => {
         resizeMode="cover"
         source={require("../../../assets/gif/cakeOnboarding3.gif")}
       />
-      <Text style={tw`text-text-main text-2xl px-4 text-center my-2`}>
+      <CustomText style={tw`text-text-main text-2xl px-4 text-center my-2`}>
         Receive your order safely
-      </Text>
+      </CustomText>
       <Toolbar activeIndex={1} onPress={() => navigation.navigate("Signup")} />
     </OnboardingLayout>
   );

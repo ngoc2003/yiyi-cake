@@ -1,6 +1,7 @@
 import React, { ReactNode } from "react";
-import { Image, ScrollView, Text, View } from "react-native";
+import { Image, ScrollView, View } from "react-native";
 import tw from "../../lib/tailwind";
+import CustomText from "../components/common/text";
 
 interface AuthLayoutProps {
   children: ReactNode;
@@ -44,10 +45,12 @@ const AuthLayout = ({ children, title, subtitle }: AuthLayoutProps) => {
           resizeMode="contain"
         />
         <View style={tw`items-center pt-0 p-5 pb-10 flex-1`}>
-          <Text style={tw`text-3xl text-center font-semibold text-text-main`}>
+          <CustomText
+            style={tw`text-3xl text-center font-semibold text-text-main`}
+          >
             {title}
-          </Text>
-          <Text style={tw`pt-3.5 text-text-light`}>{subtitle}</Text>
+          </CustomText>
+          <CustomText style={tw`pt-3.5 text-text-light`}>{subtitle}</CustomText>
           {children}
         </View>
       </View>

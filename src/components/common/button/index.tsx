@@ -1,14 +1,15 @@
-import React from "react";
-import { Text, TouchableOpacity } from "react-native";
+import React, { ReactNode } from "react";
+import { TouchableOpacity } from "react-native";
 import tw from "../../../../lib/tailwind";
+import CustomText from "../text";
 
 interface ButtonProps {
   onPress: () => void;
   isActive?: boolean;
-  text: string;
+  children: ReactNode;
 }
 
-const Button = ({ onPress, isActive, text }: ButtonProps) => {
+const Button = ({ onPress, isActive, children }: ButtonProps) => {
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -23,9 +24,11 @@ const Button = ({ onPress, isActive, text }: ButtonProps) => {
         }),
       }}
     >
-      <Text style={tw`text-center text-text-main text-base font-semibold`}>
-        {text}
-      </Text>
+      <CustomText
+        style={tw`text-center text-text-main text-base font-semibold`}
+      >
+        {children}
+      </CustomText>
     </TouchableOpacity>
   );
 };

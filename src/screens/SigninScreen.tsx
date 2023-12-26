@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Image, TouchableOpacity, View } from "react-native";
 import tw from "../../lib/tailwind";
 import { isPhoneNumber, isValidPassword } from "../utils/regex";
 import { ParamListBase, useNavigation } from "@react-navigation/native";
@@ -11,6 +11,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useToast } from "react-native-toast-notifications";
+import CustomText from "../components/common/text";
 
 const schema = yup.object().shape({
   password: yup
@@ -75,21 +76,23 @@ const SigninScreen = () => {
         isError={!!errors.password?.message}
         onChangeText={(text) => setValue("password", text)}
       />
-      <Button
-        onPress={handleSubmit(onSubmit)}
-        text="Sign in"
-        isActive={canSubmit}
-      />
+      <Button onPress={handleSubmit(onSubmit)} isActive={canSubmit}>
+        Sign in
+      </Button>
 
       <View style={tw`py-5 items-center flex-row`}>
-        <Text style={tw`text-text-light`}>Don't have an account?</Text>
+        <CustomText style={tw`text-text-light`}>
+          Don't have an account?
+        </CustomText>
         <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
-          <Text style={tw`text-text-main font-semibold ml-1`}>Sign up</Text>
+          <CustomText style={tw`text-text-main font-semibold ml-1`}>
+            Sign up
+          </CustomText>
         </TouchableOpacity>
       </View>
 
       <View style={tw`mt-18`}>
-        <Text style={tw`text-text-light`}>Or sign in with</Text>
+        <CustomText style={tw`text-text-light`}>Or sign in with</CustomText>
         <View style={tw`flex-row mt-4 justify-center gap-4`}>
           <Image
             source={require("../../assets/images/facebook.png")}
