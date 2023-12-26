@@ -6,15 +6,15 @@ import tw from "../../../../lib/tailwind";
 const CATEGORY_LIST = [
   {
     title: "Birthday",
-    icon: require("../../assets/images/category/birthday.png"),
+    icon: require("../../../../assets/images/category/birthday.png"),
   },
   {
     title: "Cupcake",
-    icon: require("../../assets/images/category/cupcake.png"),
+    icon: require("../../../../assets/images/category/cupcake.png"),
   },
   {
     title: "Decoration",
-    icon: require("../../assets/images/category/decoration.png"),
+    icon: require("../../../../assets/images/category/decoration.png"),
   },
 ];
 

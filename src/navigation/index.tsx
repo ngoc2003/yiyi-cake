@@ -42,7 +42,7 @@ const MainNavigation = () => {
   return (
     <NavigationContainer>
       <StatusBar translucent={false} style="dark" />
-      <Stack.Navigator initialRouteName="Main">
+      <Stack.Navigator initialRouteName="Onboarding1">
         <Stack.Screen
           options={options}
           name="Onboarding1"
