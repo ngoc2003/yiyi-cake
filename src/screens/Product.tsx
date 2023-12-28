@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Image, SafeAreaView, ScrollView, View } from "react-native";
+import { SafeAreaView, ScrollView, View } from "react-native";
 import tw from "../../lib/tailwind";
 
 import Note from "../components/product-screen/note";
@@ -22,16 +22,6 @@ const ProductScreen = () => {
     <View style={tw`bg-background flex-1`}>
       <ScrollView>
         <SafeAreaView>
-          <Image
-            source={require("../../assets/images/example.png")}
-            style={{
-              width: "100%",
-              height: undefined,
-              aspectRatio: 6 / 5,
-              ...tw`rounded-xl`,
-            }}
-            resizeMode="cover"
-          />
           <View style={tw`p-5`}>
             <BasicInfo selectedSize={selectedSize} />
             <SizeList
