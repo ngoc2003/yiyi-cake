@@ -17,6 +17,7 @@ import {
   BottomTabNavigationOptions,
   createBottomTabNavigator,
 } from "@react-navigation/bottom-tabs";
+import ProductScreen from "../screens/Product";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -42,7 +43,7 @@ const MainNavigation = () => {
   return (
     <NavigationContainer>
       <StatusBar translucent={false} style="dark" />
-      <Stack.Navigator initialRouteName="Onboarding1">
+      <Stack.Navigator initialRouteName="Product">
         <Stack.Screen
           options={options}
           name="Onboarding1"
@@ -70,6 +71,11 @@ const MainNavigation = () => {
           component={CreateAccount}
         />
         <Stack.Screen options={options} name="Otp" component={OtpScreen} />
+        <Stack.Screen
+          options={options}
+          name="Product"
+          component={ProductScreen}
+        />
         <Stack.Screen
           options={options}
           name="Signin"

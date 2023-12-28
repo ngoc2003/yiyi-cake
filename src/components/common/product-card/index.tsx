@@ -1,17 +1,21 @@
 import React from "react";
-import { Image, View } from "react-native";
+import { Image, TouchableOpacity, View } from "react-native";
 import { colors } from "../../../theme";
 import tw from "../../../../lib/tailwind";
 import { StarIcon } from "react-native-heroicons/solid";
 import CustomText from "../text";
 import { formatNumberWithDot } from "../../../utils";
+import { ParamListBase, useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 interface ProductCardProp {
   data: any;
 }
 const ProductCard = ({ data }: ProductCardProp) => {
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+
   return (
-    <View
+    <TouchableOpacity
       style={{
         width: "47%",
         ...tw`rounded-xl bg-background`,
@@ -19,6 +23,7 @@ const ProductCard = ({ data }: ProductCardProp) => {
         shadowOpacity: 0.3,
         shadowOffset: { width: 0, height: 4 },
       }}
+      onPress={() => navigation.navigate("Product")}
     >
       <View>
         <Image
@@ -72,7 +77,7 @@ const ProductCard = ({ data }: ProductCardProp) => {
           </CustomText>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
