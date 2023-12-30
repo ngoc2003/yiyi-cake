@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 import tw from "../../../lib/tailwind";
 import { isPhoneNumber } from "../../utils/regex";
@@ -8,25 +8,86 @@ import TextField from "../../components/common/text-field";
 import Button from "../../components/common/button";
 import AuthLayout from "../../layouts/AuthLayout";
 import CustomText from "../../components/common/text";
+import { debounce } from "lodash";
+import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
+import { firebaseConfig } from "../../../config/firebase.config";
+import useFirebaseAuth from "../../hooks/useFirebaseAuth";
+import { useToast } from "react-native-toast-notifications";
 
 const SignupScreen = () => {
+  const toast = useToast();
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const [phoneNumber, setPhoneNumber] = useState<string>("");
+
   const isError = useMemo<boolean>(
     () => !!phoneNumber && !isPhoneNumber(phoneNumber),
     [phoneNumber]
   );
 
+  const { verifyPhoneNumber, getUserByPhoneNumber } = useFirebaseAuth();
+  const recaptchaVerifier = useRef(null);
+
+  const handleSignUp = async () => {
+    try {
+      const formattedPhoneNumber = /^0/.test(phoneNumber)
+        ? "+84" + phoneNumber.substring(1)
+        : phoneNumber;
+
+      const userInformation = await getUserByPhoneNumber(formattedPhoneNumber);
+
+      if (userInformation) {
+        return toast.show(
+          "This phone number is already signed up with another account.",
+          {
+            type: "custom",
+            onClose: () => navigation.navigate("Signin"),
+          }
+        );
+      }
+      if (!recaptchaVerifier?.current) {
+        return;
+      }
+      const verification = await verifyPhoneNumber(
+        formattedPhoneNumber,
+        recaptchaVerifier.current
+      );
+
+      navigation.navigate("Otp", {
+        v: verification,
+        p: formattedPhoneNumber,
+        a: () => {
+          navigation.navigate("CreateAccount", {
+            phoneNumber: formattedPhoneNumber,
+          });
+        },
+      });
+    } catch (error) {
+      console.error("Phone authentication error:", error);
+      toast.show("Failed to check phone number. Please try again.", {
+        type: "error",
+      });
+    }
+  };
+
+  const handlePhoneNumberChange = debounce((text: string) => {
+    setPhoneNumber(text);
+  }, 200);
+
   return (
     <AuthLayout title="Welcome" subtitle="Type your phone number to sign up">
+      <FirebaseRecaptchaVerifierModal
+        ref={recaptchaVerifier}
+        firebaseConfig={firebaseConfig}
+      />
       <TextField
         isError={isError}
         placeholder="Your phone number . . ."
         errorText="You must type valid phone number"
-        onChangeText={(text) => setPhoneNumber(text)}
+        onChangeText={handlePhoneNumberChange}
       />
       <Button
-        onPress={() => navigation.navigate("Otp")}
+        fullWidth
+        onPress={() => handleSignUp()}
         isActive={!isError && !!phoneNumber}
       >
         Sign up
@@ -43,7 +104,7 @@ const SignupScreen = () => {
         </TouchableOpacity>
       </View>
 
-      <View style={tw`mt-30`}>
+      {/* <View style={tw`mt-30`}>
         <CustomText style={tw`text-text-light`}>Or sign up with</CustomText>
         <View style={tw`flex-row mt-4 justify-center gap-4`}>
           <Image
@@ -65,7 +126,7 @@ const SignupScreen = () => {
             resizeMode="contain"
           />
         </View>
-      </View>
+      </View> */}
     </AuthLayout>
   );
 };

@@ -1,19 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View } from "react-native";
 import OTPTextView from "react-native-otp-textinput";
 import tw from "../../../lib/tailwind";
-import { ParamListBase, useNavigation } from "@react-navigation/native";
+import {
+  ParamListBase,
+  useNavigation,
+  useRoute,
+} from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import HeaderNavigation from "../../components/common/header-navigation";
 import CustomText from "../../components/common/text";
 
-const OTP_LENGTH = 4;
+import useFirebaseAuth from "../../hooks/useFirebaseAuth";
+
+const OTP_LENGTH = 6;
 
 const OtpScreen = () => {
+  const route = useRoute();
+  const { v, p, a } = route.params;
+  const [otp, setOtp] = useState<string>("");
+  const { signIn } = useFirebaseAuth();
+
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
-  const handleSubmit = () => {
-    navigation.navigate("CreateAccount");
+
+  const handleSubmit = async () => {
+    try {
+      signIn(v, otp);
+      setOtp("");
+      a();
+    } catch (err) {
+      console.log(err);
+    }
   };
+
+  useEffect(() => {
+    if (otp.length === OTP_LENGTH) {
+      handleSubmit();
+    }
+  }, [otp]);
 
   return (
     <View style={tw`flex-1 px-7 bg-background`}>
@@ -23,16 +47,17 @@ const OtpScreen = () => {
           Confirm Otp
         </CustomText>
         <CustomText style={tw`text-text-light mt-4.5 text-center`}>
-          We sent OTP code to phone number{"\n"} +843 621 169
+          We have sent OTP code to phone number{"\n"} {p}
         </CustomText>
-        <View style={{ width: 272, paddingTop: 53 }}>
+        <View style={{ paddingTop: 53, paddingHorizontal: 5, maxWidth: 350 }}>
           <OTPTextView
+            inputCount={6}
             handleTextChange={(e) => {
-              if (e.length === OTP_LENGTH) handleSubmit();
+              setOtp(e);
             }}
             tintColor="#FFD43E"
             autoFocus
-            textInputStyle={tw`bg-smoke-main rounded-md`}
+            textInputStyle={tw`bg-smoke-main rounded-md w-12 h-12`}
           />
         </View>
       </View>

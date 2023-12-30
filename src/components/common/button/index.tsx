@@ -1,9 +1,5 @@
 import React, { ReactNode } from "react";
-import {
-  StyleProp,
-  TouchableOpacity,
-  TouchableOpacityProps,
-} from "react-native";
+import { TouchableOpacity, TouchableOpacityProps } from "react-native";
 import tw from "../../../../lib/tailwind";
 import CustomText from "../text";
 
@@ -11,21 +7,32 @@ interface ButtonProps extends TouchableOpacityProps {
   onPress: () => void;
   isActive?: boolean;
   children: ReactNode;
+  fullWidth?: boolean;
 }
 
-const Button = ({ onPress, isActive, children, ...props }: ButtonProps) => {
+const Button = ({
+  onPress,
+  fullWidth,
+  isActive,
+  children,
+  ...props
+}: ButtonProps) => {
   return (
     <TouchableOpacity
+      disabled={!isActive}
       onPress={onPress}
       style={{
-        ...tw`p-3 flex-1 rounded-xl mt-8 ${
-          !!isActive ? "bg-primary-main" : "bg-smoke-light"
-        }`,
+        ...tw.style(
+          "p-3 rounded-xl mt-8",
+          !!isActive ? "bg-primary-main" : "bg-smoke-light",
+          fullWidth && "w-full"
+        ),
         ...(!!isActive && {
           shadowColor: "#FCBC084D",
           shadowOpacity: 0.3,
           shadowOffset: { width: 0, height: 4 },
         }),
+
         ...(props?.style && typeof props.style === "object" ? props.style : {}),
       }}
     >

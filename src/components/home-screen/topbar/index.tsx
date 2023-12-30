@@ -8,13 +8,20 @@ import {
   ChatBubbleOvalLeftEllipsisIcon,
   ShoppingBagIcon,
 } from "react-native-heroicons/outline";
+import { DocumentData } from "firebase/firestore";
 
-const Topbar = () => {
+interface TopbarProp {
+  data: DocumentData;
+}
+const Topbar = ({ data }: TopbarProp) => {
   return (
     <View style={tw`flex-row items-center`}>
       <MapPinIcon size={26} color={colors.primary.main} />
-      <CustomText style={tw`flex-1 text-text-light text-base ml-2`}>
-        Phu Lam, Ha Dong
+      <CustomText
+        numberOfLines={1}
+        style={tw`flex-1 text-text-light text-base ml-2 flex-1`}
+      >
+        {data.address}
       </CustomText>
       <View style={tw`flex-row gap-2`}>
         <TouchableOpacity>
