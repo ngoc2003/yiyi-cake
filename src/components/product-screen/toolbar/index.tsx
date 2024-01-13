@@ -47,9 +47,11 @@ const Toolbar = () => {
           />
         </TouchableOpacity>
       </View>
-      <Button style={tw`mt-0`} isActive onPress={() => {}}>
-        Add to cart
-      </Button>
+      <View style={tw`flex-1`}>
+        <Button fullWidth style={tw`mt-0 `} isActive onPress={() => {}}>
+          Add to cart
+        </Button>
+      </View>
     </View>
   );
 };

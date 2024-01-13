@@ -11,12 +11,14 @@ import {
 } from "react-native-heroicons/outline";
 import { ParamListBase, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { ProductType, SizeType } from "../../../types";
 
 interface BasicInfoProps {
-  selectedSize: any;
+  data: ProductType;
+  selectedSize: SizeType;
 }
 
-const BasicInfo = ({ selectedSize }: BasicInfoProps) => {
+const BasicInfo = ({ selectedSize, data }: BasicInfoProps) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
   return (
@@ -57,7 +59,9 @@ const BasicInfo = ({ selectedSize }: BasicInfoProps) => {
       </View>
       <View style={tw`-m-5 mb-0`}>
         <Image
-          source={require("../../../../assets/images/example.png")}
+          source={{
+            uri: data.image,
+          }}
           style={{
             width: "100%",
             height: undefined,
@@ -67,9 +71,7 @@ const BasicInfo = ({ selectedSize }: BasicInfoProps) => {
           resizeMode="cover"
         />
       </View>
-      <CustomText style={tw`text-2xl mt-5`}>
-        Vanilla Berry Dream cake
-      </CustomText>
+      <CustomText style={tw`text-2xl mt-5`}>{data.name}</CustomText>
       <View style={tw`flex-row gap-1 justify-between items-center mt-2`}>
         <View style={tw`flex-row items-center`}>
           <StarIcon color={colors.primary.main} size={18} />
@@ -80,9 +82,20 @@ const BasicInfo = ({ selectedSize }: BasicInfoProps) => {
           </CustomText>
         </View>
 
-        <CustomText style={tw`text-2xl text-primary-main font-semibold`}>
-          {formatNumberWithDot(190000 + selectedSize.price)}
-        </CustomText>
+        <View style={tw`flex-row items-center`}>
+          {!!+data.discount && (
+            <CustomText style={tw`text-base text-text-light/80 line-through`}>
+              {formatNumberWithDot(+data.price + +selectedSize.price)}
+            </CustomText>
+          )}
+          <CustomText
+            style={tw` ml-1 text-2xl text-primary-main font-semibold`}
+          >
+            {formatNumberWithDot(
+              +data.price - +data.discount + +selectedSize.price
+            )}
+          </CustomText>
+        </View>
       </View>
     </View>
   );

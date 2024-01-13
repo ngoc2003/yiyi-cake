@@ -2,43 +2,24 @@ import React from "react";
 import { FlatList, TouchableOpacity, View } from "react-native";
 import CustomText from "../../common/text";
 import tw from "../../../../lib/tailwind";
-
-export const SIZE_LIST = [
-  {
-    id: 2,
-    name: "8x5",
-    price: 0,
-  },
-  {
-    id: 3,
-    name: "13x6",
-    price: 100000,
-  },
-  {
-    id: 4,
-    name: "17x8",
-    price: 180000,
-  },
-  {
-    id: 5,
-    name: "21x8",
-    price: 260000,
-  },
-];
+import { SizeType } from "../../../types";
 
 interface SizeListProps {
-  selectedSize: any;
+  selectedSize: SizeType | null;
+  data: SizeType[];
   setSelectedSize: React.Dispatch<React.SetStateAction<any>>;
 }
 
-const SizeList = ({ selectedSize, setSelectedSize }: SizeListProps) => {
+const SizeList = ({ data, selectedSize, setSelectedSize }: SizeListProps) => {
+  if (!selectedSize) return;
+
   return (
     <View>
       <CustomText style={tw`text-xl mt-7.5`}>Size</CustomText>
       <View style={tw`-mr-5 pt-4`}>
         <FlatList
           horizontal
-          data={SIZE_LIST}
+          data={data}
           keyExtractor={(item) => item.id + ""}
           renderItem={({ item }) => (
             <TouchableOpacity
@@ -49,7 +30,7 @@ const SizeList = ({ selectedSize, setSelectedSize }: SizeListProps) => {
                   : "bg-smoke-light"
               }`}
             >
-              <CustomText style={tw`text-base`}>{item.name}cm</CustomText>
+              <CustomText style={tw`text-base`}>{item.name}</CustomText>
             </TouchableOpacity>
           )}
           showsHorizontalScrollIndicator={false}
