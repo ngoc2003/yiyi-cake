@@ -1,5 +1,5 @@
 import { collection, getDocs, query } from "firebase/firestore";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { db } from "../../config/firebase.config";
 
 interface GetFireBaseDataProps {

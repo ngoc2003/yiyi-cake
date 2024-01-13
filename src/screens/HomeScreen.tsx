@@ -7,23 +7,27 @@ import SearchBox from "../components/home-screen/search-box";
 import CategoryBox from "../components/home-screen/category-box";
 import useFirebaseAuth from "../hooks/useFirebaseAuth";
 import LoadingScreen from "./Loading";
-import { useGetFirebaseData } from "../hooks/useGetFirebaseData";
 import useProducts from "../hooks/useProducts";
-import { ProductType } from "../types";
+import { CategoryType, ProductType } from "../types";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const HomeScreen = () => {
   const [birthdayCakeList, setBirthdayCakeList] = useState<ProductType[]>([]);
   const [cupcakeList, setCupcakeList] = useState<ProductType[]>([]);
   const { userInformation } = useFirebaseAuth();
   const { getProducListtByCategory, isLoading } = useProducts();
-  const { data: categoryList, isLoading: isFetchCategoryLoading } =
-    useGetFirebaseData({ name: "categories" });
+  const [categoryList, setCategoryList] = useState<CategoryType[]>([]);
 
   useEffect(() => {
+    const fetchCategory = async () => {
+      const categories = (await AsyncStorage.getItem("categories")) ?? "";
+      setCategoryList(JSON.parse(categories));
+    };
     getProducListtByCategory("Birthday").then((list) =>
       setBirthdayCakeList(list)
     );
     getProducListtByCategory("Cupcake").then((list) => setCupcakeList(list));
+    fetchCategory();
   }, []);
 
   if (!userInformation) {
@@ -39,7 +43,7 @@ const HomeScreen = () => {
         <SafeAreaView>
           <Topbar data={userInformation} />
           <SearchBox />
-          <CategoryBox data={categoryList} isLoading={isFetchCategoryLoading} />
+          <CategoryBox data={categoryList} />
           <CategoryList
             isLoading={isLoading}
             title="Birthday cake"

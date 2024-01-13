@@ -15,11 +15,13 @@ import { ProductType, SizeType } from "../../../types";
 
 interface BasicInfoProps {
   data: ProductType;
-  selectedSize: SizeType;
+  selectedSize: SizeType | null;
 }
 
 const BasicInfo = ({ selectedSize, data }: BasicInfoProps) => {
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+
+  if (!selectedSize) return;
 
   return (
     <View>
@@ -85,14 +87,14 @@ const BasicInfo = ({ selectedSize, data }: BasicInfoProps) => {
         <View style={tw`flex-row items-center`}>
           {!!+data.discount && (
             <CustomText style={tw`text-base text-text-light/80 line-through`}>
-              {formatNumberWithDot(+data.price + +selectedSize.price)}
+              {formatNumberWithDot(data.price + selectedSize.price)}
             </CustomText>
           )}
           <CustomText
             style={tw` ml-1 text-2xl text-primary-main font-semibold`}
           >
             {formatNumberWithDot(
-              +data.price - +data.discount + +selectedSize.price
+              data.price - data.discount + selectedSize.price
             )}
           </CustomText>
         </View>

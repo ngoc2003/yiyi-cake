@@ -75,7 +75,7 @@ const ProductCard = ({ data }: ProductCardProp) => {
           {data.name}
         </CustomText>
         <View style={tw`items-end mt-1`}>
-          {!!+data.discount && (
+          {!!data.discount && (
             <CustomText
               style={{
                 fontSize: 10,

@@ -83,18 +83,18 @@ const StackNavigation = ({ initialRouteName }: StackNavigationProp) => {
 
 const MainNavigation = () => {
   const { user, userInformation, loading } = useFirebaseAuth();
+
   const initialRouteName = useMemo(
     () => (!!user && !!userInformation ? "Main" : "Onboarding2"),
-    [user?.phoneNumber, userInformation?.phoneNumber]
+    [user, userInformation]
   );
+
   return (
     <NavigationContainer>
       <StatusBar translucent={false} style="dark" />
       {loading && <LoadingScreen />}
 
-      {!loading && user && userInformation && (
-        <StackNavigation initialRouteName={initialRouteName} />
-      )}
+      {!loading && <StackNavigation initialRouteName={initialRouteName} />}
     </NavigationContainer>
   );
 };

@@ -19,16 +19,20 @@ const useFirebaseAuth = () => {
 
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged(async (authUser) => {
-      await AsyncStorage.setItem("user", JSON.stringify(authUser));
+      try {
+        await AsyncStorage.setItem("user", JSON.stringify(authUser));
 
-      if (!authUser?.phoneNumber) return;
-      const userInfo = await getUserByPhoneNumber(authUser.phoneNumber);
+        if (!authUser?.phoneNumber) return;
+        const userInfo = await getUserByPhoneNumber(authUser.phoneNumber);
 
-      setUserInformation(userInfo);
+        setUserInformation(userInfo);
 
-      setUser(authUser);
-
-      setLoading(false);
+        setUser(authUser);
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+      }
     });
 
     return () => unsubscribe();
