@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, Image, View } from "react-native";
+import { FlatList, Image, SafeAreaView, View } from "react-native";
 import CustomText from "../../common/text";
 import tw from "../../../../lib/tailwind";
 import { CategoryType } from "../../../types";
@@ -11,7 +11,7 @@ interface CategoryBoxProps {
 
 const CategoryBox = ({ data, isLoading }: CategoryBoxProps) => {
   return (
-    <View>
+    <SafeAreaView>
       <CustomText style={tw`text-lg mb-4`}>Categories</CustomText>
       {isLoading ? (
         <FlatList
@@ -41,7 +41,7 @@ const CategoryBox = ({ data, isLoading }: CategoryBoxProps) => {
           )}
         />
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 

@@ -21,10 +21,8 @@ const ProductCard = ({ data }: ProductCardProp) => {
     <TouchableOpacity
       style={{
         width: "47%",
-        ...tw`rounded-xl bg-background`,
+        ...tw`rounded-xl bg-background shadow-lg`,
         shadowColor: colors.text.light,
-        shadowOpacity: 0.3,
-        shadowOffset: { width: 0, height: 4 },
       }}
       onPress={() => navigation.navigate("Product", { id: data.id })}
     >

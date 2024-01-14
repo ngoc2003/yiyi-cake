@@ -28,7 +28,7 @@ const ToppingItem = ({ data: item, onPress, isSelected }: ToppingItemProps) => {
       >
         <View
           style={{
-            ...tw`p-0.5 rounded-full ${
+            ...tw`p-0.5 rounded-full rounded-full ${
               isSelected ? `bg-[${item.color}]/20` : ""
             }`,
           }}

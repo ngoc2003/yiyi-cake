@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, View } from "react-native";
-import tw from "../../lib/tailwind";
-import Note from "../components/product-screen/note";
-import Toolbar from "../components/product-screen/toolbar";
-import BasicInfo from "../components/product-screen/basic-info";
-import SizeList from "../components/product-screen/size-list";
-import ToppingList from "../components/product-screen/topping-list";
-import GiftList from "../components/product-screen/gift-list";
-import { GiftType, ProductType, SizeType, ToppingType } from "../types";
-import useProducts from "../hooks/useProducts";
+import tw from "../../../lib/tailwind";
+import Note from "../../components/product-screen/note";
+import Toolbar from "../../components/product-screen/toolbar";
+import BasicInfo from "../../components/product-screen/basic-info";
+import SizeList from "../../components/product-screen/size-list";
+import ToppingList from "../../components/product-screen/topping-list";
+import GiftList from "../../components/product-screen/gift-list";
+import { GiftType, ProductType, SizeType, ToppingType } from "../../types";
+import useProducts from "../../hooks/useProducts";
 import { useRoute } from "@react-navigation/native";
-import LoadingScreen from "./Loading";
+import LoadingScreen from "../Loading";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import MainLayout from "../../layouts/MainLayout";
 
 const ProductScreen = () => {
   const {
@@ -23,7 +24,6 @@ const ProductScreen = () => {
     gifts: [],
   });
   const [product, setProduct] = useState<ProductType | null>(null);
-
   const [selectedGift, setSelectedGift] = useState<GiftType | null>(null);
   const [selectedSize, setSelectedSize] = useState<SizeType | null>(null);
   const [selectedTopping, setSelectedTopping] = useState<ToppingType | null>(
@@ -66,7 +66,7 @@ const ProductScreen = () => {
   }
 
   return (
-    <View style={tw`bg-background flex-1`}>
+    <MainLayout>
       <ScrollView>
         <SafeAreaView>
           <View style={tw`p-5`}>
@@ -93,7 +93,7 @@ const ProductScreen = () => {
         </SafeAreaView>
       </ScrollView>
       <Toolbar />
-    </View>
+    </MainLayout>
   );
 };
 

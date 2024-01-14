@@ -12,10 +12,8 @@ import { debounce } from "lodash";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
 import { firebaseConfig } from "../../../config/firebase.config";
 import useFirebaseAuth from "../../hooks/useFirebaseAuth";
-import { useToast } from "react-native-toast-notifications";
 
 const SignupScreen = () => {
-  const toast = useToast();
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const [phoneNumber, setPhoneNumber] = useState<string>("");
 
@@ -36,13 +34,7 @@ const SignupScreen = () => {
       const userInformation = await getUserByPhoneNumber(formattedPhoneNumber);
 
       if (userInformation) {
-        return toast.show(
-          "This phone number is already signed up with another account.",
-          {
-            type: "custom",
-            onClose: () => navigation.navigate("Signin"),
-          }
-        );
+        return navigation.navigate("Signin");
       }
       if (!recaptchaVerifier?.current) {
         return;
@@ -63,9 +55,6 @@ const SignupScreen = () => {
       });
     } catch (error) {
       console.error("Phone authentication error:", error);
-      toast.show("Failed to check phone number. Please try again.", {
-        type: "error",
-      });
     }
   };
 

@@ -43,7 +43,10 @@ const BasicInfo = ({ selectedSize, data }: BasicInfoProps) => {
           />
         </TouchableOpacity>
         <View style={tw`flex-row gap-3`}>
-          <TouchableOpacity style={tw`bg-text-main/25 p-1.5 rounded-full`}>
+          <TouchableOpacity
+            style={tw`bg-text-main/25 p-1.5 rounded-full`}
+            onPress={() => navigation.navigate("Cart")}
+          >
             <ShoppingBagIcon
               size={24}
               strokeWidth={2}

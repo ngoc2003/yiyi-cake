@@ -1,7 +1,7 @@
 import React from "react";
 import tw from "../../../../lib/tailwind";
 import CustomText from "../../common/text";
-import { FlatList, View } from "react-native";
+import { FlatList, SafeAreaView, View } from "react-native";
 import { ToppingType } from "../../../types";
 import ToppingItem, { Skeleton } from "./topping-item";
 
@@ -22,7 +22,7 @@ const ToppingList = ({
     <View>
       <CustomText style={tw`text-xl mt-7.5`}>Toppings</CustomText>
       {!selectedTopping && <Skeleton />}
-      <View style={tw`-mr-5 pt-4`}>
+      <SafeAreaView style={tw`-mr-5 pt-4`}>
         <FlatList
           horizontal
           data={data}
@@ -36,7 +36,7 @@ const ToppingList = ({
           )}
           showsHorizontalScrollIndicator={false}
         />
-      </View>
+      </SafeAreaView>
     </View>
   );
 };

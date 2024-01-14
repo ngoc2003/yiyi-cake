@@ -5,9 +5,9 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import tw from "../../../lib/tailwind";
 import OnboardingLayout from "../../layouts/OnboardingLayout";
 import CustomText from "../../components/common/text";
-import Toolbar from "../../components/onboarding-screen/toolbar";
 import { useGetFirebaseData } from "../../hooks/useGetFirebaseData";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Toolbar from "../../components/common/toolbar";
 
 const { width } = Dimensions.get("window");
 

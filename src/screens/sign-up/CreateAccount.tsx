@@ -13,9 +13,8 @@ import Button from "../../components/common/button";
 import { FieldValues, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useToast } from "react-native-toast-notifications";
 import CustomText from "../../components/common/text";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { db } from "../../../config/firebase.config";
 
 const schema = yup.object().shape({
@@ -25,7 +24,6 @@ const schema = yup.object().shape({
 
 const CreateAccount = () => {
   const route = useRoute();
-  const toast = useToast();
   const { phoneNumber } = route.params;
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
 
@@ -50,11 +48,7 @@ const CreateAccount = () => {
       phoneNumber,
     });
 
-    toast.show("Create account successfully!", {
-      type: "custom",
-    });
-
-    navigation.navigate("Main");
+    navigation.navigate("Home");
   };
 
   return (

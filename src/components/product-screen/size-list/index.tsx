@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, TouchableOpacity, View } from "react-native";
+import { FlatList, SafeAreaView, TouchableOpacity, View } from "react-native";
 import CustomText from "../../common/text";
 import tw from "../../../../lib/tailwind";
 import { SizeType } from "../../../types";
@@ -16,7 +16,7 @@ const SizeList = ({ data, selectedSize, setSelectedSize }: SizeListProps) => {
   return (
     <View>
       <CustomText style={tw`text-xl mt-7.5`}>Size</CustomText>
-      <View style={tw`-mr-5 pt-4`}>
+      <SafeAreaView style={tw`-mr-5 mt-4`}>
         <FlatList
           horizontal
           data={data}
@@ -35,7 +35,7 @@ const SizeList = ({ data, selectedSize, setSelectedSize }: SizeListProps) => {
           )}
           showsHorizontalScrollIndicator={false}
         />
-      </View>
+      </SafeAreaView>
     </View>
   );
 };

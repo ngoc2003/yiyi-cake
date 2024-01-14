@@ -10,11 +10,11 @@ import AuthLayout from "../layouts/AuthLayout";
 import { FieldValues, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useToast } from "react-native-toast-notifications";
 import CustomText from "../components/common/text";
 import { firebaseConfig } from "../../config/firebase.config";
 import useFirebaseAuth from "../hooks/useFirebaseAuth";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
+import { usePushNotifications } from "../hooks/usePushNotification";
 
 const schema = yup.object().shape({
   phoneNumber: yup
@@ -28,7 +28,7 @@ const schema = yup.object().shape({
 });
 
 const SigninScreen = () => {
-  const toast = useToast();
+  const { expoPushToken, pushNotification } = usePushNotifications();
   const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
   const { verifyPhoneNumber, getUserByPhoneNumber } = useFirebaseAuth();
   const recaptchaVerifier = useRef(null);
@@ -56,13 +56,7 @@ const SigninScreen = () => {
       const userInformation = await getUserByPhoneNumber(formattedPhoneNumber);
 
       if (!userInformation) {
-        return toast.show(
-          "This phone number haven't signed up with any account.",
-          {
-            type: "custom",
-            onClose: () => navigation.navigate("Signup"),
-          }
-        );
+        return navigation.navigate("Signup");
       }
 
       if (!recaptchaVerifier?.current) {
@@ -77,17 +71,18 @@ const SigninScreen = () => {
         v: verification,
         p: formattedPhoneNumber,
         a: () => {
-          toast.show("Signin successfully!", {
-            type: "custom",
-            onClose: () => navigation.navigate("Main"),
-          });
+          console.log(expoPushToken?.data);
+          if (expoPushToken?.data) {
+            pushNotification(expoPushToken.data as any, {
+              title: "Welcome to Yiyi cake",
+              body: "Bake memories with Yiyi every day!",
+            });
+          }
+          navigation.navigate("Home");
         },
       });
     } catch (error) {
       console.error("Phone authentication error:", error);
-      toast.show("Failed to check phone number. Please try again.", {
-        type: "error",
-      });
     }
   };
 

@@ -2,7 +2,7 @@ import React from "react";
 import { Dimensions, Image } from "react-native";
 import OnboardingLayout from "../../layouts/OnboardingLayout";
 import tw from "../../../lib/tailwind";
-import Toolbar from "../../components/onboarding-screen/toolbar";
+import Toolbar from "../../components/common/toolbar";
 import { ParamListBase, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import CustomText from "../../components/common/text";

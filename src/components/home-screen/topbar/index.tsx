@@ -9,11 +9,15 @@ import {
   ShoppingBagIcon,
 } from "react-native-heroicons/outline";
 import { DocumentData } from "firebase/firestore";
+import { ParamListBase, useNavigation } from "@react-navigation/native";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 interface TopbarProp {
   data: DocumentData;
 }
 const Topbar = ({ data }: TopbarProp) => {
+  const navigation = useNavigation<NativeStackNavigationProp<ParamListBase>>();
+
   return (
     <View style={tw`flex-row items-center`}>
       <MapPinIcon size={26} color={colors.primary.main} />
@@ -24,7 +28,7 @@ const Topbar = ({ data }: TopbarProp) => {
         {data.address}
       </CustomText>
       <View style={tw`flex-row gap-2`}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("Cart")}>
           <ShoppingBagIcon
             size={26}
             strokeWidth={2}

@@ -7,34 +7,19 @@ import {
 import { StatusBar } from "expo-status-bar";
 import OnboardingStep2 from "../screens/onboarding/Step2";
 import OnboardingStep3 from "../screens/onboarding/Step3";
-import HomeScreen from "../screens/HomeScreen";
+import HomeScreen from "../screens/main/HomeScreen";
 import SignupScreen from "../screens/sign-up";
 import OtpScreen from "../screens/sign-up/OtpScreen";
 import CreateAccount from "../screens/sign-up/CreateAccount";
 import SigninScreen from "../screens/SigninScreen";
-import {
-  BottomTabNavigationOptions,
-  createBottomTabNavigator,
-} from "@react-navigation/bottom-tabs";
-import ProductScreen from "../screens/Product";
+
+import ProductScreen from "../screens/main/Product";
 import useFirebaseAuth from "../hooks/useFirebaseAuth";
 import LoadingScreen from "../screens/Loading";
+import AccountScreen from "../screens/main/AccountScreen";
+import CartScreen from "../screens/main/CartScreen";
 
 const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
-
-const BottomTabNavigator = () => {
-  const options: BottomTabNavigationOptions = {
-    headerShown: false,
-  };
-  return (
-    <Tab.Navigator initialRouteName="Home">
-      <Tab.Screen options={options} name="Home" component={HomeScreen} />
-      <Tab.Screen options={options} name="Order" component={HomeScreen} />
-      <Tab.Screen options={options} name="Account" component={HomeScreen} />
-    </Tab.Navigator>
-  );
-};
 
 interface StackNavigationProp {
   initialRouteName: string;
@@ -71,11 +56,14 @@ const StackNavigation = ({ initialRouteName }: StackNavigationProp) => {
         component={ProductScreen}
       />
       <Stack.Screen options={options} name="Signin" component={SigninScreen} />
+      <Stack.Screen options={options} name="Cart" component={CartScreen} />
 
+      <Stack.Screen options={options} name="Home" component={HomeScreen} />
+      <Stack.Screen options={options} name="Order" component={HomeScreen} />
       <Stack.Screen
         options={options}
-        name="Main"
-        component={BottomTabNavigator}
+        name="Account"
+        component={AccountScreen}
       />
     </Stack.Navigator>
   );
@@ -85,7 +73,7 @@ const MainNavigation = () => {
   const { user, userInformation, loading } = useFirebaseAuth();
 
   const initialRouteName = useMemo(
-    () => (!!user && !!userInformation ? "Main" : "Onboarding2"),
+    () => (!!user && !!userInformation ? "Home" : "Onboarding2"),
     [user, userInformation]
   );
 

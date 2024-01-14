@@ -8,6 +8,9 @@ export default {
     orientation: "portrait",
     icon: "./assets/adaptive-icon.png",
     userInterfaceStyle: "light",
+    notification: {
+      icon: "./assets/adaptive-icon.png",
+    },
     splash: {
       image: "./assets/adaptive-icon.png",
       resizeMode: "contain",
@@ -22,9 +25,15 @@ export default {
         backgroundColor: "#ffffff",
       },
       package: "com.buithuyngoc2003.yiyicake",
+      googleServicesFile: "./google-services.json",
     },
     web: {
       favicon: "./assets/favicon.png",
+    },
+    extra: {
+      eas: {
+        projectId: "ac1d3ec6-851a-491c-8e32-7348871905f7",
+      },
     },
   },
 };
