@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, View } from "react-native";
 import tw from "../../../lib/tailwind";
 import Note from "../../components/product-screen/note";
@@ -13,24 +13,55 @@ import { useRoute } from "@react-navigation/native";
 import LoadingScreen from "../Loading";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import MainLayout from "../../layouts/MainLayout";
+import { FieldValues, useForm } from "react-hook-form";
+import { CartProductType, addCartActions } from "../../store/slices/cartSlice";
+import { useDispatch } from "react-redux";
+
+interface VariantType {
+  sizes: SizeType[];
+  toppings: ToppingType[];
+  gifts: GiftType[];
+}
 
 const ProductScreen = () => {
+  const dispatch = useDispatch();
   const {
     params: { id },
   } = useRoute();
-  const [variant, setVariant] = useState({
+
+  const [variant, setVariant] = useState<VariantType>({
     sizes: [],
     toppings: [],
     gifts: [],
   });
+
+  const { setValue, handleSubmit, watch } = useForm<CartProductType>({
+    defaultValues: {
+      userId: "",
+      quantity: 1,
+      product: undefined,
+      sizeId: "",
+      toppingId: "",
+      giftId: "",
+      note: "",
+    },
+  });
+
   const [product, setProduct] = useState<ProductType | null>(null);
-  const [selectedGift, setSelectedGift] = useState<GiftType | null>(null);
-  const [selectedSize, setSelectedSize] = useState<SizeType | null>(null);
-  const [selectedTopping, setSelectedTopping] = useState<ToppingType | null>(
-    null
-  );
 
   const { getProductById } = useProducts();
+
+  const handleSetSelectedValue = useCallback(
+    (name: string, value: string | number) => {
+      setValue(name as any, value);
+    },
+    []
+  );
+
+  const onSubmit = (values: FieldValues) => {
+    console.log(values);
+    dispatch(addCartActions(values));
+  };
 
   useEffect(() => {
     getProductById(id).then((result) => setProduct(result));
@@ -42,10 +73,16 @@ const ProductScreen = () => {
         const toppings = await AsyncStorage.getItem("toppings");
         const sizes = await AsyncStorage.getItem("sizes");
         const gifts = await AsyncStorage.getItem("gifts");
+        const user = await AsyncStorage.getItem("user");
+        const userId = JSON.parse(user!)["id"];
 
-        setSelectedTopping(toppings ? JSON.parse(toppings)[0] : null);
-        setSelectedSize(sizes ? JSON.parse(sizes)[0] : null);
-        setSelectedGift(gifts ? JSON.parse(gifts)[0] : null);
+        setValue("toppingId", toppings ? JSON.parse(toppings)[0].id : null);
+        setValue("sizeId", sizes ? JSON.parse(sizes)[0].id : null);
+        setValue("giftId", gifts ? JSON.parse(gifts)[0].id : null);
+        setValue("userId", userId);
+        if (product?.id) {
+          setValue("product", product);
+        }
 
         setVariant((prev) => ({
           ...prev,
@@ -59,7 +96,7 @@ const ProductScreen = () => {
     };
 
     fetchData();
-  }, []);
+  }, [product?.id]);
 
   if (!product) {
     return <LoadingScreen />;
@@ -70,29 +107,41 @@ const ProductScreen = () => {
       <ScrollView>
         <SafeAreaView>
           <View style={tw`p-5`}>
-            <BasicInfo data={product} selectedSize={selectedSize} />
+            <BasicInfo
+              data={product}
+              selectedSize={
+                variant.sizes.find((item) => item.id === watch("sizeId")) ??
+                null
+              }
+            />
             <SizeList
               data={variant.sizes?.sort((a: SizeType, b: SizeType) =>
                 a.name > b.name ? 1 : a.name < b.name ? -1 : 0
               )}
-              selectedSize={selectedSize}
-              setSelectedSize={setSelectedSize}
+              selectedSize={watch("sizeId")}
+              setSelectedSize={(id) => handleSetSelectedValue("sizeId", id)}
             />
             <ToppingList
               data={variant.toppings}
-              selectedTopping={selectedTopping}
-              setSelectedTopping={setSelectedTopping}
+              selectedTopping={watch("toppingId")}
+              setSelectedTopping={(id) =>
+                handleSetSelectedValue("toppingId", id)
+              }
             />
             <GiftList
               data={variant.gifts}
-              selectedGift={selectedGift}
-              setSelectedGift={setSelectedGift}
+              selectedGift={watch("giftId")}
+              setSelectedGift={(id) => handleSetSelectedValue("giftId", id)}
             />
-            <Note />
+            <Note onChange={() => handleSetSelectedValue("note", id)} />
           </View>
         </SafeAreaView>
       </ScrollView>
-      <Toolbar />
+      <Toolbar
+        quantity={watch("quantity")}
+        onSubmit={handleSubmit(onSubmit)}
+        onChange={(val: number) => handleSetSelectedValue("quantity", val)}
+      />
     </MainLayout>
   );
 };

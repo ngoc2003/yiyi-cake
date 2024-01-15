@@ -5,9 +5,9 @@ import tw from "../../../../lib/tailwind";
 import { SizeType } from "../../../types";
 
 interface SizeListProps {
-  selectedSize: SizeType | null;
+  selectedSize: string | null;
   data: SizeType[];
-  setSelectedSize: React.Dispatch<React.SetStateAction<any>>;
+  setSelectedSize: (id: string) => void;
 }
 
 const SizeList = ({ data, selectedSize, setSelectedSize }: SizeListProps) => {
@@ -20,12 +20,12 @@ const SizeList = ({ data, selectedSize, setSelectedSize }: SizeListProps) => {
         <FlatList
           horizontal
           data={data}
-          keyExtractor={(item) => item.id + ""}
+          keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <TouchableOpacity
-              onPress={() => setSelectedSize(item)}
+              onPress={() => setSelectedSize(item.id)}
               style={tw`px-5 py-2 rounded-xl mr-4 ${
-                item.id === selectedSize.id
+                item.id === selectedSize
                   ? "bg-primary-lighter border border-primary-light"
                   : "bg-smoke-light"
               }`}

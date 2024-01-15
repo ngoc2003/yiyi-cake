@@ -7,8 +7,8 @@ import ToppingItem, { Skeleton } from "./topping-item";
 
 interface ToppingListProps {
   data: ToppingType[];
-  selectedTopping: ToppingType | null;
-  setSelectedTopping: React.Dispatch<React.SetStateAction<any>>;
+  selectedTopping: string | null;
+  setSelectedTopping: (id: string) => void;
 }
 
 const ToppingList = ({
@@ -30,8 +30,8 @@ const ToppingList = ({
           renderItem={({ item }) => (
             <ToppingItem
               data={item}
-              onPress={() => setSelectedTopping(item)}
-              isSelected={selectedTopping.id === item.id}
+              onPress={() => setSelectedTopping(item.id)}
+              isSelected={selectedTopping === item.id}
             />
           )}
           showsHorizontalScrollIndicator={false}

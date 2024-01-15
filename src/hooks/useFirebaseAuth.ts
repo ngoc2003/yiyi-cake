@@ -20,10 +20,10 @@ const useFirebaseAuth = () => {
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged(async (authUser) => {
       try {
-        await AsyncStorage.setItem("user", JSON.stringify(authUser));
-
         if (!authUser?.phoneNumber) return;
         const userInfo = await getUserByPhoneNumber(authUser.phoneNumber);
+
+        await AsyncStorage.setItem("user", JSON.stringify(userInfo));
 
         setUserInformation(userInfo);
 
@@ -46,7 +46,10 @@ const useFirebaseAuth = () => {
     const querySnapshot = await getDocs(userQuery);
 
     if (!querySnapshot.empty) {
-      return querySnapshot.docs[0].data();
+      return {
+        ...querySnapshot.docs[0].data(),
+        id: querySnapshot.docs[0].id,
+      };
     }
 
     return null;

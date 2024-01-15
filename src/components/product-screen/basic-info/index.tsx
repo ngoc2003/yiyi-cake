@@ -33,7 +33,7 @@ const BasicInfo = ({ selectedSize, data }: BasicInfoProps) => {
           onPress={() =>
             navigation.canGoBack()
               ? navigation.goBack()
-              : navigation.navigate("Main")
+              : navigation.navigate("Home")
           }
         >
           <ArrowLeftIcon

@@ -4,9 +4,11 @@ import { Text, TextProps } from "react-native";
 const CustomText = (props: TextProps) => {
   return (
     <Text
-      style={{
-        fontFamily: "Poppins",
-      }}
+      style={
+        {
+          // fontFamily: "Poppins",
+        }
+      }
       {...props}
     />
   );

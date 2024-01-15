@@ -14,8 +14,8 @@ import { RadioButton } from "../../common/radio-button";
 
 interface GiftListProps {
   data: GiftType[];
-  selectedGift: GiftType | null;
-  setSelectedGift: React.Dispatch<React.SetStateAction<any>>;
+  selectedGift: string | null;
+  setSelectedGift: (id: string) => void;
 }
 
 const GiftList = ({ data, selectedGift, setSelectedGift }: GiftListProps) => {
@@ -32,12 +32,12 @@ const GiftList = ({ data, selectedGift, setSelectedGift }: GiftListProps) => {
           data={data}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => {
-            const isChecked = selectedGift.id === item.id;
+            const isChecked = selectedGift === item.id;
 
             return (
               <TouchableOpacity
                 style={tw`flex-row gap-5 mt-4.5`}
-                onPress={() => setSelectedGift(item)}
+                onPress={() => setSelectedGift(item.id)}
               >
                 <Image
                   style={{
